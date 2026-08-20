@@ -1158,14 +1158,15 @@ main {
 }
 
 .shop-filters {
-  border: 1px solid var(--grey-300);
-  border-radius: var(--radius-md);
-  padding: 20px;
+  border: 1px solid #e5e5e5;
+  border-radius: 20px;
+  padding: 24px 20px 20px;
+  background: var(--surface);
   position: sticky;
   top: 100px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 0;
 }
 
 .shop-filters__search {
@@ -1201,22 +1202,32 @@ main {
 .shop-filters__group h4 {
   font-family: var(--font-body);
   text-transform: none;
-  font-size: 14px;
-  margin-bottom: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 16px;
+}
+
+.shop-filters__group {
+  padding: 20px 0;
+  border-top: 1px solid #eeeeee;
+}
+
+.shop-filters__group:first-of-type {
+  border-top: 0;
+  padding-top: 20px;
 }
 
 .shop-filters__group ul {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 7px;
 }
 
 .filter-pill {
-  width: 100%;
-  text-align: left;
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  font-size: 14px;
+  padding: 7px 12px;
+  border: 1px solid #e8e8e8;
+  border-radius: var(--radius-full);
+  font-size: 13px;
   color: var(--grey-600);
   transition: background 0.2s var(--ease), color 0.2s var(--ease);
 }
@@ -1229,6 +1240,67 @@ main {
 .filter-pill.is-active {
   background: var(--ink);
   color: #fff;
+}
+
+.filter-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.filter-swatch {
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 50%;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.filter-swatch:hover,
+.filter-swatch.is-active {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--ink);
+}
+
+.filter-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-size {
+  padding: 10px 14px;
+  border-radius: var(--radius-full);
+  background: var(--grey-100);
+  color: var(--grey-600);
+  font-size: 12px;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.filter-size:hover {
+  transform: translateY(-1px);
+}
+
+.filter-size.is-active {
+  background: var(--ink);
+  color: #fff;
+}
+
+.shop-filters__apply {
+  width: 100%;
+  padding: 14px 16px;
+  margin-top: 4px;
+  border-radius: var(--radius-full);
+  background: var(--ink);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.shop-filters__apply:hover {
+  background: var(--ink-soft);
+  transform: translateY(-1px);
 }
 
 .shop-filters__group input[type='range'] {

@@ -5,6 +5,28 @@ import Reveal from '../components/Reveal.jsx'
 import { products } from '../data/products.js'
 
 const styles = ['all', 'casual', 'formal', 'party', 'gym']
+const filterColors = [
+  '#1c1c1c',
+  '#8b8b8b',
+  '#2f3e34',
+  '#3b5375',
+  '#7c2436',
+  '#22304a',
+  '#d9531e',
+  '#4b5c46',
+  '#7896b0',
+]
+const filterSizes = [
+  { value: 'XS', label: 'X-Small' },
+  { value: 'S', label: 'Small' },
+  { value: 'M', label: 'Medium' },
+  { value: 'L', label: 'Large' },
+  { value: 'XL', label: 'X-Large' },
+  { value: 'XXL', label: 'XX-Large' },
+  { value: '28', label: '28' },
+  { value: '30', label: '30' },
+  { value: '32', label: '32' },
+]
 const sortOptions = [
   { value: 'featured', label: 'Featured' },
   { value: 'price-asc', label: 'Price: Low to High' },
@@ -21,6 +43,9 @@ export default function Shop() {
 
   const [sort, setSort] = useState('featured')
   const [maxPrice, setMaxPrice] = useState(500)
+  const [selectedColor, setSelectedColor] = useState(null)
+  const [selectedSize, setSelectedSize] = useState(null)
+  const [appliedFilters, setAppliedFilters] = useState({ color: null, size: null })
 
   // Keep the visible search box in sync if the URL changes (e.g. navbar search).
   const [searchInput, setSearchInput] = useState(searchParam)
@@ -58,6 +83,8 @@ export default function Shop() {
       list = list.filter((p) => p.name.toLowerCase().includes(q))
     }
     list = list.filter((p) => p.price <= maxPrice)
+    if (appliedFilters.color) list = list.filter((p) => p.colors.includes(appliedFilters.color))
+    if (appliedFilters.size) list = list.filter((p) => p.sizes.includes(appliedFilters.size))
 
     switch (sort) {
       case 'price-asc':
@@ -74,7 +101,11 @@ export default function Shop() {
     }
 
     return list
-  }, [styleParam, saleOnly, searchParam, maxPrice, sort])
+  }, [styleParam, saleOnly, searchParam, maxPrice, sort, appliedFilters])
+
+  const applyFilters = () => {
+    setAppliedFilters({ color: selectedColor, size: selectedSize })
+  }
 
   return (
     <section className="section shop-page">
@@ -124,11 +155,49 @@ export default function Shop() {
           </div>
 
           <div className="shop-filters__group">
+            <h4>Choose Colors</h4>
+            <div className="filter-swatches">
+              {filterColors.map((color) => (
+                <button
+                  key={color}
+                  type="button"
+                  className={`filter-swatch ${selectedColor === color ? 'is-active' : ''}`}
+                  style={{ backgroundColor: color }}
+                  aria-label={`Filter by color ${color}`}
+                  aria-pressed={selectedColor === color}
+                  onClick={() => setSelectedColor((current) => (current === color ? null : color))}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="shop-filters__group">
+            <h4>Select Sizes</h4>
+            <div className="filter-sizes">
+              {filterSizes.map((size) => (
+                <button
+                  key={size.value}
+                  type="button"
+                  className={`filter-size ${selectedSize === size.value ? 'is-active' : ''}`}
+                  aria-pressed={selectedSize === size.value}
+                  onClick={() => setSelectedSize((current) => (current === size.value ? null : size.value))}
+                >
+                  {size.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="shop-filters__group">
             <label className="filter-checkbox">
               <input type="checkbox" checked={saleOnly} onChange={toggleSale} />
               On sale only
             </label>
           </div>
+
+          <button type="button" className="shop-filters__apply" onClick={applyFilters}>
+            Apply Filter
+          </button>
         </aside>
 
         <div className="shop-page__results">

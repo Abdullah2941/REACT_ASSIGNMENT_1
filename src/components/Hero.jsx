@@ -38,7 +38,7 @@ export default function Hero() {
 
       <div className="hero__media">
         <img
-          src="https://picsum.photos/seed/shopco-hero-couple/900/1000"
+          src="/Images/Hero-Photo.jpg"
           alt="Two models wearing denim jackets"
         />
         <span className="hero__sparkle hero__sparkle--large" aria-hidden="true">
